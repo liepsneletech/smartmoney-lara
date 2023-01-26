@@ -15,6 +15,10 @@ body {
     font-family: Poppins, sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 :focus {
     box-shadow: 0 0 0 3px #1970c250;
     outline: none;

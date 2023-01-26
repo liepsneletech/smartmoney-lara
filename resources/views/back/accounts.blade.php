@@ -4,15 +4,26 @@
     <main class="container">
         <div class="main-inner">
             <h1 class=" main-title">Sąskaitų sąrašas</h1>
+            <div class="filters-container">
+                <form>
+                    <select name="sort" id="sort">
+                        @foreach ($sortSelect as $value => $name)
+                            <option value="{{ $value }}" @if ($sortShow == $value) selected @endif>
+                                {{ $name }}</option>
+                        @endforeach
+                    </select>
 
-            @if (session()->has('success-add'))
-                <p class="success-green">{{ Session::get('success-add') }}</p>
-            @endif
+                    <select name="filter" id="filter">
 
+                    </select>
+                </form>
 
-            @if (session()->has('success-withdraw'))
-                <p class="success-green">{{ Session::get('success-withdraw') }}</p>
-            @endif
+                <form>
+                    <input type="text" placeholder="Ieškoti...">
+                    <button>Ieškoti</button>
+                </form>
+            </div>
+
 
             @if (session()->has('success-delete'))
                 <p class="success-green">{{ Session::get('success-delete') }}</p>
@@ -26,7 +37,7 @@
 
             <div>
                 <?php foreach ($accounts as $account) : ?>
-                <div class="account-info-box">
+                <div class="account-info-box" id="{{ $account['id'] }}">
                     <p class="id-number">&#35;<?= $account['id'] ?></p>
                     <p class="full-name"><i class="fa-solid fa-account-large person-icon"></i>
                         <?= $account['name'] . ' ' . $account['surname'] ?></p>
@@ -53,9 +64,17 @@
                             </form>
                         </div>
                     </div>
+
                 </div>
 
+
+                @if (session()->has('account-id') && session('account-id') == $account['id'])
+                    <p class="success-green">{{ Session::get('success') }}</p>
+                @endif
+
+
                 <?php endforeach ?>
+
             </div>
 
         </div>

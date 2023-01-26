@@ -19,8 +19,9 @@ class AccountController extends Controller
     public function showAccounts()
     {
         $pageTitle = 'Sąskaitų sąrašas';
+        $sortSelect = Account::SORT;
         $accounts = Account::all()->sortBy('name')->sortBy('surname');
-        return view('back.accounts', compact('pageTitle', 'accounts'));
+        return view('back.accounts', compact('pageTitle', 'accounts', 'sortSelect'));
     }
 
     public function createAccount()
@@ -82,7 +83,7 @@ class AccountController extends Controller
         $account->balance +=  $incomingFields['balanceAdd'];
         $account->update($incomingFields);
 
-        return redirect()->route('show-accounts')->with('success-add', 'Sėkmingai pridėjote lėšų!');
+        return redirect("/admin/accounts/#$account->id")->with('success', 'Sėkmingai pridėjote lėšų!')->with('account-id', $account->id);
     }
 
     public function showWithdrawMoney(Account $account)
@@ -96,20 +97,20 @@ class AccountController extends Controller
 
         $incomingFields = $request->validate(
             [
-                'balanceWithdraw' => ['required', 'regex:/^(?:[0-9]*[.])?[0-9]+$/', 'not_in:0', 'lte: balance']
+                'balanceWithdraw' => ['required', 'regex:/^(?:[0-9]*[.])?[0-9]+$/', 'not_in:0', "lte: $account->balance"]
             ],
             [
                 'balanceWithdraw.required' => 'Sumos laukelis negali būti tuščias!',
                 'balanceWithdraw.regex' => 'Įrašykite validžią sumą!',
                 'balanceWithdraw.not_in' => 'Suma negali būti lygi nuliui!',
-                'balanceWithdraw.lte' => 'Negalima minusuoti sumos, didesnės už lėšas!'
+                'balanceWithdraw.lte' => 'Minusuojama suma per didelė!'
             ]
         );
 
         $account->balance -=  $incomingFields['balanceWithdraw'];
         $account->update($incomingFields);
 
-        return redirect()->route('show-accounts')->with('success-withdraw', 'Sėkmingai minusavote lėšas!');
+        return redirect("/admin/accounts/#$account->id")->with('success', 'Sėkmingai minusavote lėšas!')->with('account-id', $account->id);
     }
 
     public function deleteAccount(Account $account)
