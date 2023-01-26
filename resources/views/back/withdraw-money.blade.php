@@ -12,14 +12,11 @@
                     <p class="error-red">{{ $message }}</p>
                 @enderror
 
-                @if (session()->has('error-withdraw'))
-                    <p class="error-red">{{ Session::get('error-withdraw') }}</p>
-                @endif
-
                 <p class="full-name">
                     <?= $account['name'] . ' ' . $account['surname'] ?></p>
                 <strong>Sąskaitos likutis: <?= number_format($account['balance'], 2, ',', ' ') ?> &euro;</strong>
-                <input type="text" name="balanceWithdraw" placeholder="Įrašykite sumą">
+                <input type="text" name="balanceWithdraw" placeholder="Įrašykite sumą"
+                    value="{{ old('balanceWithdraw') }}">
                 <button type="submit" class="btn-main btn-yellow" name="withdraw">PATVIRTINTI</button>
                 <div class="img-box"><img src="/assets/img/withdraw-money-pic.png" alt="Withdraw money"
                         class="withdraw-money-pic">

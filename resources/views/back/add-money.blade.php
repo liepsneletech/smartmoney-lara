@@ -15,7 +15,7 @@
                 <p class="full-name">
                     <?= $account['name'] . ' ' . $account['surname'] ?></p>
                 <strong>Sąskaitos likutis: <?= number_format($account['balance'], 2, ',', ' ') ?> &euro;</strong>
-                <input type="text" name="balanceAdd" placeholder="Įrašykite sumą">
+                <input type="text" name="balanceAdd" placeholder="Įrašykite sumą" value="{{ old('balanceAdd') }}">
                 <button type="submit" class="btn-main btn-green" name="add">PATVIRTINTI</button>
                 <div class="img-box"><img src="/assets/img/add-money-pic.png" alt="Add money" class="add-money-pic">
                 </div>

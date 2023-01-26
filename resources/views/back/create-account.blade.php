@@ -22,21 +22,19 @@
                 <form class="registration-form" action="{{ route('save-account') }}" method="post">
                     @csrf
 
-                    <input type="text" id="name" placeholder="Vardas*" name="name"
-                        value="{{ !$errors->has('name') ? old('name') : '' }}">
+                    <input type="text" id="name" placeholder="Vardas*" name="name" value="{{ old('name') }}">
                     @error('name')
                         <p class="error-red">{{ $message }}</p>
                     @enderror
 
-                    <input type="text" id="surname" placeholder="Pavardė*" name="surname"
-                        value="{{ !$errors->has('surname') ? old('surname') : '' }}">
+                    <input type="text" id="surname" placeholder="Pavardė*" name="surname" value="{{ old('surname') }}">
 
                     @error('surname')
                         <p class="error-red">{{ $message }}</p>
                     @enderror
 
                     <input type="text" id="personal-number" placeholder="Asmens kodas*" name="personal-number"
-                        value="{{ !$errors->has('personal-number') ? old('perosnal-number') : '' }}">
+                        value="{{ old('personal-number') }}">
                     @error('personal-number')
                         <p class="error-red">{{ $message }}</p>
                     @enderror

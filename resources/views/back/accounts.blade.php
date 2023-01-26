@@ -22,6 +22,8 @@
                 <p class="error-red">{{ Session::get('error-delete-account') }}</p>
             @endif
 
+
+
             <div>
                 <?php foreach ($accounts as $account) : ?>
                 <div class="account-info-box">

@@ -19,7 +19,7 @@ class AccountController extends Controller
     public function showAccounts()
     {
         $pageTitle = 'Sąskaitų sąrašas';
-        $accounts = Account::all()->sortBy('surname');
+        $accounts = Account::all()->sortBy('name')->sortBy('surname');
         return view('back.accounts', compact('pageTitle', 'accounts'));
     }
 
@@ -30,7 +30,7 @@ class AccountController extends Controller
         return view('back.create-account', compact('pageTitle', 'accounts'));
     }
 
-    public function saveAccount(Request $request, Account $account)
+    public function saveAccount(Request $request)
     {
 
         $incomingFields = $request->validate(
@@ -96,18 +96,15 @@ class AccountController extends Controller
 
         $incomingFields = $request->validate(
             [
-                'balanceWithdraw' => ['required', 'regex:/^(?:[0-9]*[.])?[0-9]+$/', 'not_in:0']
+                'balanceWithdraw' => ['required', 'regex:/^(?:[0-9]*[.])?[0-9]+$/', 'not_in:0', 'lte: balance']
             ],
             [
                 'balanceWithdraw.required' => 'Sumos laukelis negali būti tuščias!',
                 'balanceWithdraw.regex' => 'Įrašykite validžią sumą!',
-                'balanceWithdraw.not_in' => 'Suma negali būti lygi nuliui!'
+                'balanceWithdraw.not_in' => 'Suma negali būti lygi nuliui!',
+                'balanceWithdraw.lte' => 'Negalima minusuoti sumos, didesnės už lėšas!'
             ]
         );
-
-        if ($incomingFields['balanceWithdraw'] > $account->balance) {
-            return redirect()->back()->with('error-withdraw', 'Negalima minusuoti sumos, didesnės už turimas lėšas!');
-        }
 
         $account->balance -=  $incomingFields['balanceWithdraw'];
         $account->update($incomingFields);
