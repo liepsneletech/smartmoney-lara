@@ -18,5 +18,14 @@ class Account extends Model
         'dsc_balance' => 'Balansas 9-0',
     ];
 
+    const FILTER = [
+        'balanceMoreZero' => 'Su lėšomis',
+        'balanceZero' => 'Be lėšų',
+    ];
+
+    const PER_PAGE = [
+        'Visi', 5, 10, 20, 50
+    ];
+
     protected $fillable = ['name', 'surname', 'personal-number', 'iban', 'balance'];
 }

@@ -568,10 +568,10 @@ input.search-input {
 
 .filter-select {
     background-color: #e2ebf4;
+    font-size: 14px;
     border: none;
     padding: 10.5px 30px;
     border-radius: 20px;
-    padding: 7.5px 30px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: unset;
@@ -597,4 +597,14 @@ label.filters-label {
     color: #363636;
     margin-right: 12px;
     font-size: 15px;
+}
+
+.filter-btn {
+    border-radius: 20px;
+    margin-left: 12px;
+}
+
+.reset-btn {
+    background-color: #6673808f;
+    margin-left: 5px;
 }

@@ -19,10 +19,33 @@ class AccountController extends Controller
     public function showAccounts(Request $request)
     {
         $pageTitle = 'Sąskaitų sąrašas';
+
         $sortSelect = Account::SORT;
         $sortShow = isset(Account::SORT[$request->sort]) ? $request->sort : '';
-        $accounts = Account::all()->sortBy('name')->sortBy('surname');
-        return view('back.accounts', compact('pageTitle', 'accounts', 'sortSelect', 'sortShow'));
+
+        $filterSelect = Account::FILTER;
+        $filterShow = isset(Account::FILTER[$request->filter]) ? $request->filter : '';
+
+        $accounts = match ($request->sort ?? '') {
+            'asc_name' => Account::orderBy('name'),
+            'dsc_name' => Account::orderBy('name', 'desc'),
+            'asc_surname' => Account::orderBy('surname'),
+            'dsc_surname' => Account::orderBy('surname', 'desc'),
+            'asc_balance' => Account::orderBy('balance'),
+            'dsc_balance' => Account::orderBy('balance', 'desc'),
+            default => Account::orderBy('name')->where('id', '>', '0')
+        };
+
+        $accounts = match ($request->filter ?? '') {
+            'balanceMoreZero' => Account::where('balance', '>', '0'),
+            'balanceZero' => Account::where('balance', '=', '0'),
+            default => Account::where('id', '>', '0')
+        };
+
+        $accounts = $accounts->get();
+
+
+        return view('back.accounts', compact('pageTitle', 'accounts', 'sortSelect', 'sortShow', 'filterSelect', 'filterShow'));
     }
 
     public function createAccount()

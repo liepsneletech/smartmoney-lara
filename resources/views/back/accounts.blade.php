@@ -9,13 +9,10 @@
                     <div>
                         <label for="sort" class="filters-label">Rikiuoti:</label>
                         <select name="sort" id="sort" class="filter-select">
-
                             @foreach ($sortSelect as $value => $name)
                                 <option value="{{ $value }}" @if ($sortShow == $value) selected @endif>
                                     {{ $name }}</option>
                             @endforeach
-
-
                         </select>
                     </div>
 
@@ -23,13 +20,18 @@
                         <label for="filter" class="filters-label">Filtruoti sąskaitas:</label>
                         <select name="filter" id="filter"class="filter-select">
 
-                            @foreach ($sortSelect as $value => $name)
-                                <option value="{{ $value }}" @if ($sortShow == $value) selected @endif>
+                            @foreach ($filterSelect as $value => $name)
+                                <option value="{{ $value }}" @if ($filterShow == $value) selected @endif>
                                     {{ $name }}</option>
                             @endforeach
 
 
                         </select>
+
+                        <button class="btn-main btn-green search-btn filter-btn" type="submit"><i
+                                class="fa-solid fa-arrow-right"></i></button>
+                        <a href="{{ route('show-accounts') }}" class="btn-main btn-green search-btn filter-btn reset-btn"><i
+                                class="fa-solid fa-arrows-rotate"></i></a>
                     </div>
                 </form>
 
