@@ -16,12 +16,13 @@ class AccountController extends Controller
         }
     }
 
-    public function showAccounts()
+    public function showAccounts(Request $request)
     {
         $pageTitle = 'Sąskaitų sąrašas';
         $sortSelect = Account::SORT;
+        $sortShow = isset(Account::SORT[$request->sort]) ? $request->sort : '';
         $accounts = Account::all()->sortBy('name')->sortBy('surname');
-        return view('back.accounts', compact('pageTitle', 'accounts', 'sortSelect'));
+        return view('back.accounts', compact('pageTitle', 'accounts', 'sortSelect', 'sortShow'));
     }
 
     public function createAccount()

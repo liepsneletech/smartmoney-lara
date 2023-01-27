@@ -5,22 +5,37 @@
         <div class="main-inner">
             <h1 class=" main-title">Sąskaitų sąrašas</h1>
             <div class="filters-container">
-                <form>
-                    <select name="sort" id="sort">
-                        @foreach ($sortSelect as $value => $name)
-                            <option value="{{ $value }}" @if ($sortShow == $value) selected @endif>
-                                {{ $name }}</option>
-                        @endforeach
-                    </select>
+                <form class="filter-form">
+                    <div>
+                        <label for="sort" class="filters-label">Rikiuoti:</label>
+                        <select name="sort" id="sort" class="filter-select">
 
-                    <select name="filter" id="filter">
+                            @foreach ($sortSelect as $value => $name)
+                                <option value="{{ $value }}" @if ($sortShow == $value) selected @endif>
+                                    {{ $name }}</option>
+                            @endforeach
 
-                    </select>
+
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="filter" class="filters-label">Filtruoti sąskaitas:</label>
+                        <select name="filter" id="filter"class="filter-select">
+
+                            @foreach ($sortSelect as $value => $name)
+                                <option value="{{ $value }}" @if ($sortShow == $value) selected @endif>
+                                    {{ $name }}</option>
+                            @endforeach
+
+
+                        </select>
+                    </div>
                 </form>
 
-                <form>
-                    <input type="text" placeholder="Ieškoti...">
-                    <button>Ieškoti</button>
+                <form class="search-form">
+                    <input type="text" placeholder="Ieškoti..." class="search-input">
+                    <button class="btn-main btn-green search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>
 
