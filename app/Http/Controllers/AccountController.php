@@ -42,8 +42,7 @@ class AccountController extends Controller
             default => Account::where('id', '>', '0')
         };
 
-        $accounts = $accounts->get();
-
+        $accounts = $accounts->paginate(3);
 
         return view('back.accounts', compact('pageTitle', 'accounts', 'sortSelect', 'sortShow', 'filterSelect', 'filterShow'));
     }

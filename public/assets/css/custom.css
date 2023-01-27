@@ -570,7 +570,7 @@ input.search-input {
     background-color: #e2ebf4;
     font-size: 14px;
     border: none;
-    padding: 10.5px 30px;
+    padding: 10.5px 40px 10.5px 25px;
     border-radius: 20px;
     -webkit-appearance: none;
     -moz-appearance: none;

@@ -4,6 +4,15 @@
     <main class="container">
         <div class="main-inner">
             <h1 class=" main-title">Sąskaitų sąrašas</h1>
+
+            @if (session()->has('success-delete'))
+                <p class="success-green">{{ Session::get('success-delete') }}</p>
+            @endif
+
+            @if (session()->has('error-delete-account'))
+                <p class="error-red">{{ Session::get('error-delete-account') }}</p>
+            @endif
+
             <div class="filters-container">
                 <form class="filter-form">
                     <div>
@@ -41,17 +50,6 @@
                 </form>
             </div>
 
-
-            @if (session()->has('success-delete'))
-                <p class="success-green">{{ Session::get('success-delete') }}</p>
-            @endif
-
-            @if (session()->has('error-delete-account'))
-                <p class="error-red">{{ Session::get('error-delete-account') }}</p>
-            @endif
-
-
-
             <div>
                 <?php foreach ($accounts as $account) : ?>
                 <div class="account-info-box" id="{{ $account['id'] }}">
@@ -84,16 +82,14 @@
 
                 </div>
 
-
                 @if (session()->has('account-id') && session('account-id') == $account['id'])
                     <p class="success-green">{{ Session::get('success') }}</p>
                 @endif
 
-
                 <?php endforeach ?>
 
             </div>
-
+            {{ $accounts->links() }}
         </div>
     </main>
 @endsection
