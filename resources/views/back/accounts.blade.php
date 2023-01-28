@@ -18,6 +18,7 @@
                     <div>
                         <label for="sort" class="filters-label">Rikiuoti:</label>
                         <select name="sort" id="sort" class="filter-select">
+
                             @foreach ($sortSelect as $value => $name)
                                 <option value="{{ $value }}" @if ($sortShow == $value) selected @endif>
                                     {{ $name }}</option>
@@ -29,6 +30,7 @@
                         <label for="filter" class="filters-label">Filtruoti sąskaitas:</label>
                         <select name="filter" id="filter"class="filter-select">
 
+                            <option>Visos</option>
                             @foreach ($filterSelect as $value => $name)
                                 <option value="{{ $value }}" @if ($filterShow == $value) selected @endif>
                                     {{ $name }}</option>

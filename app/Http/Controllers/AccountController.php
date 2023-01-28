@@ -26,23 +26,23 @@ class AccountController extends Controller
         $filterSelect = Account::FILTER;
         $filterShow = isset(Account::FILTER[$request->filter]) ? $request->filter : '';
 
-        $accounts = match ($request->sort ?? '') {
-            'asc_name' => Account::orderBy('name'),
-            'dsc_name' => Account::orderBy('name', 'desc'),
-            'asc_surname' => Account::orderBy('surname'),
-            'dsc_surname' => Account::orderBy('surname', 'desc'),
-            'asc_balance' => Account::orderBy('balance'),
-            'dsc_balance' => Account::orderBy('balance', 'desc'),
-            default => Account::orderBy('name')->where('id', '>', '0')
-        };
-
         $accounts = match ($request->filter ?? '') {
             'balanceMoreZero' => Account::where('balance', '>', '0'),
             'balanceZero' => Account::where('balance', '=', '0'),
             default => Account::where('id', '>', '0')
         };
 
-        $accounts = $accounts->paginate(3);
+        $accounts = match ($request->sort ?? '') {
+            'asc_name' => $accounts->orderBy('name'),
+            'dsc_name' => $accounts->orderBy('name', 'desc'),
+            'asc_surname' => $accounts->orderBy('surname'),
+            'dsc_surname' => $accounts->orderBy('surname', 'desc'),
+            'asc_balance' => $accounts->orderBy('balance'),
+            'dsc_balance' => $accounts->orderBy('balance', 'desc'),
+            default => $accounts->orderBy('name')->orderBy('surname')->where('id', '>', '0')
+        };
+
+        $accounts = $accounts->paginate(7)->withQueryString();
 
         return view('back.accounts', compact('pageTitle', 'accounts', 'sortSelect', 'sortShow', 'filterSelect', 'filterShow'));
     }
@@ -82,7 +82,6 @@ class AccountController extends Controller
         Account::create($incomingFields);
         return redirect()->route('show-accounts');
     }
-
 
     public function showAddMoney(Account $account)
     {

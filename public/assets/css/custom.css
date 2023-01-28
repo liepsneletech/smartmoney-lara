@@ -230,6 +230,7 @@ strong {
 
 .accounts-btn:hover {
     background: #104577;
+    color: #fff;
 }
 
 .btn-green {
@@ -249,7 +250,6 @@ strong {
 
 .btn-main:hover {
     background: #104577;
-    color: #fff;
 }
 
 .btn-blue {
@@ -530,7 +530,7 @@ input {
     margin-bottom: 25px;
     padding: 17px 27px;
     border: 1px solid #1045777c;
-    border-radius: 20px;
+    border-radius: 30px;
 }
 
 .filter-form {
@@ -607,4 +607,35 @@ label.filters-label {
 .reset-btn {
     background-color: #6673808f;
     margin-left: 5px;
+}
+
+.reset-btn:hover {
+    color: #fff;
+}
+
+nav p.small.text-muted {
+    display: none;
+}
+
+.main-inner nav div {
+    justify-content: center !important;
+    margin-top: 15px;
+}
+
+.active > .page-link {
+    background: #e2ebf4;
+    border-color: #66738041;
+    color: #82888d;
+}
+
+.page-link,
+.page-link:hover,
+.page-link:active {
+    color: #6673808f;
+    padding: 5px 15px;
+    border-color: #66738041;
+}
+
+.page-link:focus {
+    box-shadow: none;
 }

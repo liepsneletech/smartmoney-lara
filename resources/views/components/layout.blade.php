@@ -10,7 +10,9 @@
     <!-- fontawesome -->
     <link href="/node_modules/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
     <!-- styles -->
+    <link rel="stylesheet" href=" https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/custom.css">
+    <script src="/assets/js/app.js" defer></script>
 </head>
 
 <body>
