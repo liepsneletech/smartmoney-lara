@@ -39,7 +39,7 @@ class AccountController extends Controller
             'dsc_surname' => $accounts->orderBy('surname', 'desc'),
             'asc_balance' => $accounts->orderBy('balance'),
             'dsc_balance' => $accounts->orderBy('balance', 'desc'),
-            default => $accounts->orderBy('name')->orderBy('surname')->where('id', '>', '0')
+            default => $accounts->orderBy('surname')->orderBy('name')->where('id', '>', '0')
         };
 
         $accounts = $accounts->paginate(7)->withQueryString();
