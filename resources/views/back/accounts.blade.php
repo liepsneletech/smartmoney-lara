@@ -96,16 +96,18 @@
 
             </div>
             <div class="pagination-container">
-                <form class="results-form">
-                    <p class="results-text">Puslapyje rodoma rezultatų:</p>
-                    <select name="pagination-results" id="pagination-results" class="filter-select">
+                {{-- <form class="results-form">
+                    @csrf
+                    <p class="results-text">Puslapyje rodyti rezultatų:</p>
+                    <select name="per_page" id="pagination-results" class="filter-select" onchange="this.form.submit()">
                         @foreach ($perPageSelect as $value)
                             <option value="{{ $value }}" @if ($perPage = $perPageShow == $value) selected @endif>
                                 {{ $value }}</option>
                         @endforeach
                     </select>
-                </form>
+                </form> --}}
                 {{ $accounts->links() }}
+
             </div>
 
         </div>

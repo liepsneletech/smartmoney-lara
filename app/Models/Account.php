@@ -24,7 +24,7 @@ class Account extends Model
     ];
 
     const PER_PAGE = [
-        'Visi', 5, 10, 20, 50
+        5, 10, 20, 50
     ];
 
     protected $fillable = ['name', 'surname', 'personal-number', 'iban', 'balance'];

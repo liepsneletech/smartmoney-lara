@@ -26,9 +26,6 @@ class AccountController extends Controller
         $filterSelect = Account::FILTER;
         $filterShow = isset(Account::FILTER[$request->filter]) ? $request->filter : '';
 
-        $perPageSelect = Account::PER_PAGE;
-        $perPageShow = isset(Account::PER_PAGE[$request->per_page]) ? $request->per_page : '';
-
         $accounts = match ($request->filter ?? '') {
             'balanceMoreZero' => Account::where('balance', '>', '0'),
             'balanceZero' => Account::where('balance', '=', '0'),
@@ -45,7 +42,14 @@ class AccountController extends Controller
             default => $accounts->orderBy('surname')->orderBy('name')->where('id', '>', '0')
         };
 
-        $accounts = $accounts->paginate(7)->withQueryString();
+        $perPageSelect = Account::PER_PAGE;
+
+        $perPageShow = in_array($request->per_page, Account::PER_PAGE) ? $request->per_page : '5';
+        if ($perPageShow == '5') {
+            $accounts = $accounts->paginate(5)->withQueryString();
+        } else {
+            $accounts = $accounts->paginate($perPageShow)->withQueryString();
+        }
 
         return view('back.accounts', compact(
             'pageTitle',
