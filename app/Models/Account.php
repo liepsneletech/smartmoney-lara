@@ -2,12 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Account extends Model
 {
+    use Searchable;
     use HasFactory;
+
+    protected $fillable = ['name', 'surname', 'personal-number', 'iban', 'balance'];
+
+    public function toSearchableArray()
+    {
+        return [
+            'name' => $this->name,
+            'surname' => $this->surname,
+            'iban' => $this->iban
+        ];
+    }
 
     const SORT = [
         'asc_surname' => 'Pavardė A-Z',
@@ -22,10 +35,4 @@ class Account extends Model
         'balanceMoreZero' => 'Su lėšomis',
         'balanceZero' => 'Be lėšų',
     ];
-
-    const PER_PAGE = [
-        5, 10, 20, 50
-    ];
-
-    protected $fillable = ['name', 'surname', 'personal-number', 'iban', 'balance'];
 }

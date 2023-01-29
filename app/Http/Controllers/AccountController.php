@@ -18,38 +18,35 @@ class AccountController extends Controller
 
     public function showAccounts(Request $request)
     {
-        $pageTitle = 'Sąskaitų sąrašas';
+        if (!$request->s) {
 
+            $accounts = match ($request->filter ?? '') {
+                'balanceMoreZero' => Account::where('balance', '>', '0'),
+                'balanceZero' => Account::where('balance', '=', '0'),
+                default => Account::where('id', '>', '0')
+            };
+
+            $accounts = match ($request->sort ?? '') {
+                'asc_surname' => $accounts->orderBy('surname')->orderBy('name'),
+                'dsc_surname' => $accounts->orderBy('surname', 'desc'),
+                'asc_name' => $accounts->orderBy('name')->orderBy('surname'),
+                'dsc_name' => $accounts->orderBy('name', 'desc'),
+                'asc_balance' => $accounts->orderBy('balance'),
+                'dsc_balance' => $accounts->orderBy('balance', 'desc'),
+                default => $accounts->orderBy('surname')->orderBy('name')->where('id', '>', '0')
+            };
+        } else {
+            $accounts = Account::search($request->s);
+        }
+
+        $accounts = $accounts->paginate(5)->withQueryString();
+
+        $pageTitle = 'Sąskaitų sąrašas';
         $sortSelect = Account::SORT;
         $sortShow = isset(Account::SORT[$request->sort]) ? $request->sort : '';
-
         $filterSelect = Account::FILTER;
         $filterShow = isset(Account::FILTER[$request->filter]) ? $request->filter : '';
-
-        $accounts = match ($request->filter ?? '') {
-            'balanceMoreZero' => Account::where('balance', '>', '0'),
-            'balanceZero' => Account::where('balance', '=', '0'),
-            default => Account::where('id', '>', '0')
-        };
-
-        $accounts = match ($request->sort ?? '') {
-            'asc_name' => $accounts->orderBy('name'),
-            'dsc_name' => $accounts->orderBy('name', 'desc'),
-            'asc_surname' => $accounts->orderBy('surname'),
-            'dsc_surname' => $accounts->orderBy('surname', 'desc'),
-            'asc_balance' => $accounts->orderBy('balance'),
-            'dsc_balance' => $accounts->orderBy('balance', 'desc'),
-            default => $accounts->orderBy('surname')->orderBy('name')->where('id', '>', '0')
-        };
-
-        $perPageSelect = Account::PER_PAGE;
-
-        $perPageShow = in_array($request->per_page, Account::PER_PAGE) ? $request->per_page : '5';
-        if ($perPageShow == '5') {
-            $accounts = $accounts->paginate(5)->withQueryString();
-        } else {
-            $accounts = $accounts->paginate($perPageShow)->withQueryString();
-        }
+        $searchTerm = $request->s;
 
         return view('back.accounts', compact(
             'pageTitle',
@@ -58,8 +55,7 @@ class AccountController extends Controller
             'sortShow',
             'filterSelect',
             'filterShow',
-            'perPageSelect',
-            'perPageShow'
+            'searchTerm'
         ));
     }
 
@@ -158,5 +154,11 @@ class AccountController extends Controller
         }
         $account->delete();
         return redirect()->back()->with('success-delete', 'Sėkmingai ištrynėte sąskaitą!');
+    }
+
+    public function search($term)
+    {
+        $accounts = Account::search($term)->get();
+        return $accounts;
     }
 }

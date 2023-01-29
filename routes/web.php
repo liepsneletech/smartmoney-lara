@@ -15,19 +15,19 @@ use App\Http\Controllers\AccountController;
 |
 */
 
-Route::prefix('admin')->group(function () {
-    Route::get('/accounts', [AccountController::class, 'showAccounts'])->middleware('auth')->name('show-accounts');
+Route::middleware('auth')->prefix('admin')->group(function () {
+    Route::get('/accounts', [AccountController::class, 'showAccounts'])->name('show-accounts');
 
-    Route::get('/create-account', [AccountController::class, 'createAccount'])->middleware('auth')->name('create-account');
-    Route::post('/create-account', [AccountController::class, 'saveAccount'])->middleware('auth')->name('save-account');
+    Route::get('/create-account', [AccountController::class, 'createAccount'])->name('create-account');
+    Route::post('/create-account', [AccountController::class, 'saveAccount'])->name('save-account');
 
-    Route::get('/accounts/add/{account}', [AccountController::class, 'showAddMoney'])->middleware('auth')->name('show-add-money');
-    Route::put('/accounts/add/{account}', [AccountController::class, 'addMoney'])->middleware('auth')->name('add-money');
+    Route::get('/accounts/add/{account}', [AccountController::class, 'showAddMoney'])->name('show-add-money');
+    Route::put('/accounts/add/{account}', [AccountController::class, 'addMoney'])->name('add-money');
 
-    Route::get('/accounts/withdraw/{account}', [AccountController::class, 'showWithdrawMoney'])->middleware('auth')->name('show-withdraw-money');
-    Route::put('/accounts/withdraw/{account}', [AccountController::class, 'withdrawMoney'])->middleware('auth')->name('withdraw-money');
+    Route::get('/accounts/withdraw/{account}', [AccountController::class, 'showWithdrawMoney'])->name('show-withdraw-money');
+    Route::put('/accounts/withdraw/{account}', [AccountController::class, 'withdrawMoney'])->name('withdraw-money');
 
-    Route::delete('/accounts/delete/{account}', [AccountController::class, 'deleteAccount'])->middleware('auth')->name('delete-account');
+    Route::delete('/accounts/delete/{account}', [AccountController::class, 'deleteAccount'])->name('delete-account');
 });
 
 Route::get('/', [AccountController::class, 'index'])->name('index');

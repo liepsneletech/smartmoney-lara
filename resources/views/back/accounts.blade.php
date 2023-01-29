@@ -50,8 +50,9 @@
                     </div>
                 </form>
 
-                <form class="search-form">
-                    <input type="text" placeholder="Ieškoti..." class="search-input">
+                <form class="search-form" action="{{ route('show-accounts') }}">
+                    <input type="text" placeholder="Ieškoti..." class="search-input" name="s"
+                        value="@if (isset($accounts) && count($accounts) === 0) {{ $searchTerm }} @endif">
                     <button class="btn-main btn-green search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>
