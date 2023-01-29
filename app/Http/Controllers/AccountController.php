@@ -150,6 +150,10 @@ class AccountController extends Controller
         $account->balance -=  $incomingFields['balanceWithdraw'];
         $account->update($incomingFields);
 
+        if (session('accounts-url')) {
+            return redirect(session('accounts-url') . "#$account->id")->with('success', 'Sėkmingai minusavote lėšas!')->with('account-id', $account->id);
+        }
+
         return redirect("/admin/accounts/#$account->id")->with('success', 'Sėkmingai minusavote lėšas!')->with('account-id', $account->id);
     }
 
