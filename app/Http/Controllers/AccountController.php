@@ -80,7 +80,7 @@ class AccountController extends Controller
         $incomingFields['balance'] = 0;
 
         Account::create($incomingFields);
-        return redirect()->route('show-accounts');
+        return redirect()->route('show-accounts')->with('success-new-account', 'Sėkmingai sukūrėte sąskaitą!');
     }
 
     public function showAddMoney(Account $account)

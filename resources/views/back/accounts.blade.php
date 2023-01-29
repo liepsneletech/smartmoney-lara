@@ -5,6 +5,10 @@
         <div class="main-inner">
             <h1 class=" main-title">Sąskaitų sąrašas</h1>
 
+            @if (session()->has('success-new-account'))
+                <p class="success-green">{{ Session::get('success-new-account') }}</p>
+            @endif
+
             @if (session()->has('success-delete'))
                 <p class="success-green">{{ Session::get('success-delete') }}</p>
             @endif

@@ -625,13 +625,13 @@ nav p.small.text-muted {
 .active > .page-link {
     background: #e2ebf4;
     border-color: #66738041;
-    color: #82888d;
+    color: #363636;
 }
 
 .page-link,
 .page-link:hover,
 .page-link:active {
-    color: #6673808f;
+    color: #363636;
     padding: 5px 15px;
     border-color: #66738041;
 }
