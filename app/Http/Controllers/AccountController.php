@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
-use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AccountController extends Controller
 {
@@ -41,6 +41,7 @@ class AccountController extends Controller
         }
 
         $accounts = $accounts->paginate(5)->withQueryString();
+        Session::put('accounts-url', $request->fullUrl());
 
         $pageTitle = 'Sąskaitų sąrašas';
         $sortSelect = Account::SORT;
@@ -117,6 +118,10 @@ class AccountController extends Controller
 
         $account->balance +=  $incomingFields['balanceAdd'];
         $account->update($incomingFields);
+
+        if (session('accounts-url')) {
+            return redirect(session('accounts-url') . "#$account->id")->with('success', 'Sėkmingai pridėjote lėšų!')->with('account-id', $account->id);
+        }
 
         return redirect("/admin/accounts/#$account->id")->with('success', 'Sėkmingai pridėjote lėšų!')->with('account-id', $account->id);
     }
