@@ -26,6 +26,9 @@ class AccountController extends Controller
         $filterSelect = Account::FILTER;
         $filterShow = isset(Account::FILTER[$request->filter]) ? $request->filter : '';
 
+        $perPageSelect = Account::PER_PAGE;
+        $perPageShow = isset(Account::PER_PAGE[$request->per_page]) ? $request->per_page : '';
+
         $accounts = match ($request->filter ?? '') {
             'balanceMoreZero' => Account::where('balance', '>', '0'),
             'balanceZero' => Account::where('balance', '=', '0'),
@@ -44,7 +47,16 @@ class AccountController extends Controller
 
         $accounts = $accounts->paginate(7)->withQueryString();
 
-        return view('back.accounts', compact('pageTitle', 'accounts', 'sortSelect', 'sortShow', 'filterSelect', 'filterShow'));
+        return view('back.accounts', compact(
+            'pageTitle',
+            'accounts',
+            'sortSelect',
+            'sortShow',
+            'filterSelect',
+            'filterShow',
+            'perPageSelect',
+            'perPageShow'
+        ));
     }
 
     public function createAccount()

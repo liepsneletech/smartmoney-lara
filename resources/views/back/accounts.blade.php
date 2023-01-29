@@ -95,7 +95,19 @@
                 <?php endforeach ?>
 
             </div>
-            {{ $accounts->links() }}
+            <div class="pagination-container">
+                <form class="results-form">
+                    <p class="results-text">Puslapyje rodoma rezultatų:</p>
+                    <select name="pagination-results" id="pagination-results" class="filter-select">
+                        @foreach ($perPageSelect as $value)
+                            <option value="{{ $value }}" @if ($perPage = $perPageShow == $value) selected @endif>
+                                {{ $value }}</option>
+                        @endforeach
+                    </select>
+                </form>
+                {{ $accounts->links() }}
+            </div>
+
         </div>
     </main>
 @endsection
